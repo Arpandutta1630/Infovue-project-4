@@ -11,23 +11,52 @@
         }
 
         #navbar {
-            background-color: #0a068ce1;
+            background: linear-gradient(to right, #2b5876, #4e4376);
             padding: 15px;
             color: white;
             text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #navbar #profileLogo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         #sidebar {
             width: 250px;
             height: 100vh;
-            background-color: #335cd8;
+            background: linear-gradient(to right, #2b5876, #4e4376);
             color: white;
             position: fixed;
-            left: 0;
+            left: -250px;
             top: 0;
             padding-top: 20px;
             box-sizing: border-box;
-            transition: margin-left 0.3s;
+            transition: left 0.3s;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #0d5ec1eb;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
         #sidebar img {
@@ -37,33 +66,20 @@
             margin-bottom: 20px;
         }
 
-        #profileInfo,
-        .profileInfo,
-        .campaignInfo,
-        .domainInfo {
-            display: none;
-            padding: 10px;
-            background-color: #330dba;
-            border-radius: 5px;
-            color: white;
-            margin-bottom: 10px;
-        }
         .info {
             display: none;
             padding: 10px;
-            background-color: #330dba;
+            background-color: #2c2c2c;
             border-radius: 5px;
             color: white;
             margin-bottom: 10px;
         }
 
-        #content {
-            margin-left: 250px;
-            padding: 20px;
-            transition: margin-left 0.3s;
+        .info p {
+            margin: 5px 0;
+            font-size: 16px;
         }
 
-      
         #sidebar a {
             padding: 10px;
             display: block;
@@ -72,34 +88,21 @@
             margin-bottom: 10px;
             border-bottom: 1px solid #888;
             transition: background-color 0.3s;
-        }
-        .info p {
-            margin: 5px 0;
-            font-size: 16px;
+            border-radius: 5px;
         }
 
-        
-        #navbar a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s;
         }
 
-       
         #sidebar a:hover {
-            background-color: #59b7ff;
+            background-color: #2c2c2c;
         }
 
-        
         #sidebar a.active {
             background-color: #04AA6D;
-        }
-
-        
-        #sidebar {
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #888 #0d5ec1eb;
         }
 
         #sidebar::-webkit-scrollbar {
@@ -114,11 +117,10 @@
             background-color: #888;
         }
 
-      
         @media screen and (max-width: 600px) {
             #sidebar {
                 width: 100%;
-                margin-left: -100%;
+                left: -100%;
             }
 
             #content {
@@ -132,6 +134,36 @@
             }
         }
     </style>
+    <script>
+        var sidebarVisible = false;
+
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            sidebar.style.left = sidebarVisible ? "-250px" : "0";
+            sidebarVisible = !sidebarVisible;
+
+            
+            var content = document.getElementById("content");
+            content.style.marginLeft = sidebarVisible ? "0" : "250px";
+        }
+
+        function showProfile() {
+            toggleContent('.profileInfo');
+        }
+
+        function showCampaign() {
+            toggleContent('.campaignInfo');
+        }
+
+        function showDomain() {
+            toggleContent('.domainInfo');
+        }
+
+        function toggleContent(selector) {
+            var content = document.querySelector(selector);
+            content.style.display = (content.style.display === "block") ? "none" : "block";
+        }
+    </script>
 </head>
 <body>
 
@@ -139,6 +171,7 @@
         <a href="#" onclick="showContent('Home')">🏠 Home</a>
         <a href="#" onclick="showContent('Status')">📈 Status</a>
         <a href="#" onclick="showContent('Email')">📧 Email</a>
+        <img id="profileLogo" src="Ar.jpg" alt="Profile Logo" onclick="toggleSidebar()">
     </div>
     
     <div id="sidebar">
@@ -154,7 +187,6 @@
             <p>📩 From: Your Name</p>
             <p>📬 To: Your Phone</p>
         </div>
-    
         <a href="#" onclick="showDomain()">🌐 Domain</a>
         <div class="info domainInfo">
             <p>🌍 Primary: </p>
@@ -166,31 +198,6 @@
         <h2>Main Content</h2>
         <p>This is the main content area.</p>
     </div>
-<script>
-    function showProfile() {
-        toggleContent('.profileInfo');
-    }
-
-    function showCampaign() {
-        toggleContent('.campaignInfo');
-    }
-
-    function showDomain() {
-        toggleContent('.domainInfo');
-    }
-
-    function showContent(content) {
-        document.getElementById("content").innerHTML = `
-            <h2>${content}</h2>
-            <p>This is the ${content.toLowerCase()} content.</p>
-        `;
-    }
-
-    function toggleContent(selector) {
-        var content = document.querySelector(selector);
-        content.style.display = (content.style.display === "block") ? "none" : "block";
-    }
-</script>
-
 </body>
 </html>
+
